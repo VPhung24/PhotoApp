@@ -10,7 +10,13 @@ import UIKit
 
 class GalleryViewController: UIViewController {
 
-    @IBOutlet weak var imageViewGallery: UIImageView!
+    var imageViewGallery: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+
     func getImage(imageName: String){
         let fileManager = FileManager.default
         let imagePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
@@ -26,6 +32,16 @@ class GalleryViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(imageViewGallery)
+        view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        // constraints
+        NSLayoutConstraint.activate([
+            imageViewGallery.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            imageViewGallery.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageViewGallery.topAnchor.constraint(equalTo: view.topAnchor),
+            imageViewGallery.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+        
         getImage(imageName: "imageName.png")
         // Do any additional setup after loading the view.
     }
@@ -34,16 +50,4 @@ class GalleryViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
